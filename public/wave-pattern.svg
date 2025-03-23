@@ -1,0 +1,4 @@
+<!-- public/wave-pattern.svg -->
+<svg width="1200" height="60" viewBox="0 0 1200 60" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,30 C150,50 350,0 600,30 C850,60 1050,10 1200,30 L1200,60 L0,60 Z" fill="rgba(255, 255, 255, 0.05)"/>
+</svg>
