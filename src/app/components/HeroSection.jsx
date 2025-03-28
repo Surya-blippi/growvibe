@@ -235,7 +235,7 @@ export function HeroSection() {
                       <circle cx="12" cy="12" r="10" stroke="#D4AF37" strokeWidth="2"/>
                     </svg>
                   </div>
-                  <span className="text-sm text-gray-300">Limited time offer!</span>
+                  <span className="text-sm text-gray-300">Join waitlist now</span>
                 </div>
               </div>
             </div>
