@@ -4,9 +4,7 @@ import { HeroSection } from './components/HeroSection';
 import { AIFeaturesSection } from './components/AIFeaturesSection';
 import { FeaturesSection } from './components/FeaturesSection';
 import { CTASection } from './components/CTASection';
-import { Footer } from './components/Footer1';
-import { Brand } from './components/Brand';
-import AICRMDashboard from './components/AICRMDashboard'; // Fixed import - remove curly braces and fix spelling
+import { Footer } from './components/Footer';
 
 export default function Home() {
   return (
@@ -19,8 +17,6 @@ export default function Home() {
       <FeaturesSection />
       <CTASection />
       <Footer />
-      <Brand />
-      <AICRMDashboard /> {/* Fixed component name */}
     </main>
   );
 }
