@@ -1,20 +1,16 @@
 "use client";
 import { useState, useEffect, useRef } from 'react';
+import supabase from '../utils/supabaseClient';
 
 export function CTASection() {
   const [isVisible, setIsVisible] = useState(false);
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showAnimation, setShowAnimation] = useState(false);
-  const [waitlistCount, setWaitlistCount] = useState(632);
+  const [waitlistCount, setWaitlistCount] = useState(333); // Default initial value
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const sectionRef = useRef(null);
   const containerRef = useRef(null);
-  
-  // Google Form field IDs - same as in HeroSection
-  const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/1QSyZeFxR-eREdHOQ23Y6dCdTPmcfYVvoxk3qvGVp4VA/formResponse";
-  const EMAIL_FIELD_ID = "entry.26134667";
-  const WEBSITE_FIELD_ID = "entry.1685726525";
   
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -30,19 +26,26 @@ export function CTASection() {
       observer.observe(sectionRef.current);
     }
     
-    // Simulate people joining the waitlist at a slower rate (every hour)
-    const interval = setInterval(() => {
-      setWaitlistCount(prev => {
-        // Random increase between 1-10 people
-        const increase = Math.floor(Math.random() * 10) + 1;
-        return prev + increase;
-      });
-    }, 3600000); // Update every hour (3600000 ms)
+    // Fetch the current waitlist count from Supabase
+    const fetchWaitlistCount = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('waitlist_counter')
+          .select('counter')
+          .eq('id', 1)
+          .single();
+          
+        if (!error && data) {
+          setWaitlistCount(data.counter);
+        } else {
+          console.error('Error fetching waitlist count:', error);
+        }
+      } catch (error) {
+        console.error('Error fetching waitlist count:', error);
+      }
+    };
     
-    // Fixed increase by 2 every hour
-    const fixedInterval = setInterval(() => {
-      setWaitlistCount(prev => prev + 2);
-    }, 3600000); // Every hour
+    fetchWaitlistCount();
     
     const handleMouseMove = (e) => {
       if (!containerRef.current) return;
@@ -58,49 +61,72 @@ export function CTASection() {
     
     return () => {
       observer.disconnect();
-      clearInterval(interval);
-      clearInterval(fixedInterval);
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
 
-  const handleSubmitEmail = (e) => {
+  const handleSubmitEmail = async (e) => {
     e.preventDefault();
+    
     if (email) {
       setShowAnimation(true);
       
-      // Use fetch to submit the form
-      const formData = new URLSearchParams();
-      formData.append(EMAIL_FIELD_ID, email);
-      formData.append(WEBSITE_FIELD_ID, "https://example.com");
-      
-      fetch(GOOGLE_FORM_URL, {
-        method: 'POST',
-        mode: 'no-cors', // This is important for cross-domain requests
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: formData
-      })
-      .then(() => {
-        console.log("Form submitted successfully");
+      try {
+        // 1. Insert the new user entry
+        const { error: insertError } = await supabase
+          .from('autocollab')
+          .insert([
+            { email: email, website: 'https://example.com' }
+          ]);
+        
+        if (insertError) {
+          console.error('Error inserting data:', insertError);
+        } else {
+          // 2. Get the current counter value
+          const { data: counterData, error: fetchError } = await supabase
+            .from('waitlist_counter')
+            .select('counter')
+            .eq('id', 1)
+            .single();
+          
+          if (!fetchError && counterData) {
+            // 3. Increment the counter value
+            const newCount = counterData.counter + 1;
+            
+            // 4. Update the counter in the database
+            const { error: updateError } = await supabase
+              .from('waitlist_counter')
+              .update({ counter: newCount })
+              .eq('id', 1);
+            
+            if (!updateError) {
+              // 5. Update local state with new count
+              setWaitlistCount(newCount);
+            } else {
+              console.error('Error updating counter:', updateError);
+            }
+          } else {
+            console.error('Error fetching counter:', fetchError);
+          }
+        }
+        
+        // Show success animation after submission
         setTimeout(() => {
           setShowAnimation(false);
           setIsSubmitted(true);
           setEmail('');
-          setWaitlistCount(prev => prev + 1);
         }, 3000);
-      })
-      .catch(error => {
-        console.error("Error submitting form:", error);
+        
+      } catch (error) {
+        console.error('Unexpected error:', error);
+        
         // Still update UI to show success, even if there was an error
         setTimeout(() => {
           setShowAnimation(false);
           setIsSubmitted(true);
           setEmail('');
-          setWaitlistCount(prev => prev + 1);
         }, 3000);
-      });
+      }
     }
   };
 
@@ -247,7 +273,7 @@ export function CTASection() {
           )}
         </div>
         
-        {/* Testimonial/social proof */}
+        {/* Testimonial/social proof section - unchanged */}
         <div className={`mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 transition-all duration-1000 delay-600 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
         }`}>
@@ -295,7 +321,7 @@ export function CTASection() {
         </div>
       </div>
       
-      {/* Animation keyframes */}
+      {/* Animation keyframes - unchanged */}
       <style jsx>{`
         @keyframes ping-slow {
           0% { transform: scale(1); opacity: 1; }

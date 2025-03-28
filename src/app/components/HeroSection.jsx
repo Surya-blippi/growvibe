@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from 'react';
+import supabase from '../utils/supabaseClient';
 
 export function HeroSection() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -11,12 +12,6 @@ export function HeroSection() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showAnimation, setShowAnimation] = useState(false);
   const heroRef = useRef(null);
-  const formRef = useRef(null);
-  
-  // Google Form field IDs
-  const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/1QSyZeFxR-eREdHOQ23Y6dCdTPmcfYVvoxk3qvGVp4VA/formResponse";
-  const EMAIL_FIELD_ID = "entry.26134667";
-  const WEBSITE_FIELD_ID = "entry.1685726525";
   
   useEffect(() => {
     setIsLoaded(true);
@@ -75,53 +70,63 @@ export function HeroSection() {
     }
   };
 
-  const handleSubmitEmail = (e) => {
+  const handleSubmitEmail = async (e) => {
     e.preventDefault();
+    
     if (email) {
       setShowAnimation(true);
       
-      // Prepare data for the Google Form
-      const formData = new FormData();
-      formData.append(EMAIL_FIELD_ID, email);
-      formData.append(WEBSITE_FIELD_ID, websiteUrl);
-      
-      // Submit to Google Form using a hidden iframe to avoid CORS issues
-      const iframe = document.createElement('iframe');
-      iframe.name = 'hidden_iframe';
-      iframe.id = 'hidden_iframe';
-      iframe.style.display = 'none';
-      document.body.appendChild(iframe);
-      
-      if (formRef.current) {
-        formRef.current.target = 'hidden_iframe';
-        formRef.current.action = GOOGLE_FORM_URL;
-        formRef.current.method = 'POST';
+      try {
+        // 1. Insert the new user entry
+        const { error: insertError } = await supabase
+          .from('autocollab')
+          .insert([
+            { email: email, website: websiteUrl }
+          ]);
         
-        // Set form fields
-        const emailInput = formRef.current.querySelector(`[name="${EMAIL_FIELD_ID}"]`);
-        const websiteInput = formRef.current.querySelector(`[name="${WEBSITE_FIELD_ID}"]`);
-        
-        if (emailInput && websiteInput) {
-          emailInput.value = email;
-          websiteInput.value = websiteUrl;
+        if (insertError) {
+          console.error('Error inserting data:', insertError);
+        } else {
+          // 2. Get the current counter value
+          const { data: counterData, error: fetchError } = await supabase
+            .from('waitlist_counter')
+            .select('counter')
+            .eq('id', 1)
+            .single();
           
-          // Submit the form
-          formRef.current.submit();
-        }
-      }
-      
-      // Show success animation after submission
-      setTimeout(() => {
-        setShowAnimation(false);
-        setIsSubmitted(true);
-        
-        // Clean up iframe
-        setTimeout(() => {
-          if (document.getElementById('hidden_iframe')) {
-            document.body.removeChild(iframe);
+          if (!fetchError && counterData) {
+            // 3. Increment the counter value
+            const newCount = counterData.counter + 1;
+            
+            // 4. Update the counter in the database
+            const { error: updateError } = await supabase
+              .from('waitlist_counter')
+              .update({ counter: newCount })
+              .eq('id', 1);
+            
+            if (updateError) {
+              console.error('Error updating counter:', updateError);
+            }
+          } else {
+            console.error('Error fetching counter:', fetchError);
           }
-        }, 1000);
-      }, 3000);
+        }
+        
+        // Show success animation after submission
+        setTimeout(() => {
+          setShowAnimation(false);
+          setIsSubmitted(true);
+        }, 3000);
+        
+      } catch (error) {
+        console.error('Unexpected error:', error);
+        
+        // Still show success to user for better UX
+        setTimeout(() => {
+          setShowAnimation(false);
+          setIsSubmitted(true);
+        }, 3000);
+      }
     }
   };
 
@@ -142,12 +147,6 @@ export function HeroSection() {
 
   return (
     <section id="home" ref={heroRef} className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden bg-black">
-      {/* Hidden form for Google Form submission */}
-      <form ref={formRef} style={{ display: 'none' }}>
-        <input type="email" name={EMAIL_FIELD_ID} />
-        <input type="text" name={WEBSITE_FIELD_ID} />
-      </form>
-      
       {/* Subtle background gradients */}
       <div 
         className="absolute w-[45vw] h-[45vw] rounded-full bg-[rgba(218,165,32,0.05)] transform"

@@ -5,7 +5,7 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'GlowVibe - AI-Powered Creator Marketing',
+  title: 'AutoCollab - AI-Powered Distribution Engine',
   description: 'Autonomous influencer marketing to grow your revenue',
 }
 
