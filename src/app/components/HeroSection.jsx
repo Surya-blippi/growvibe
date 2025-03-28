@@ -11,7 +11,9 @@ export function HeroSection() {
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showAnimation, setShowAnimation] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const heroRef = useRef(null);
+  const videoRef = useRef(null);
   
   useEffect(() => {
     setIsLoaded(true);
@@ -29,6 +31,17 @@ export function HeroSection() {
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
+
+  const toggleVideo = () => {
+    if (videoRef.current) {
+      if (isVideoPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsVideoPlaying(!isVideoPlaying);
+    }
+  };
 
   const validateUrl = (url) => {
     // Check if URL is empty
@@ -246,18 +259,46 @@ export function HeroSection() {
       <div className={`relative w-full max-w-4xl mx-auto px-6 transition-all duration-1000 delay-700 mb-16 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
         <div className="relative">
           <div className="relative aspect-video rounded-2xl overflow-hidden border border-[rgba(218,165,32,0.3)] bg-[rgba(0,0,0,0.6)]">
-            {/* Replace with actual video player */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              {/* Placeholder for video */}
+            {/* Actual video player */}
+            <video 
+              ref={videoRef}
+              className="absolute inset-0 w-full h-full object-cover"
+              src="/autocollab.mp4"
+              preload="metadata"
+              playsInline
+              poster="/video-poster.jpg" // Optional: Add a poster image if you have one
+              onEnded={() => setIsVideoPlaying(false)}
+            />
+            
+            {/* Overlay with play button */}
+            <div 
+              className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${isVideoPlaying ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+              onClick={toggleVideo}
+            >
+              {/* Video overlay gradient */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
               
-              {/* Play button with subtle styling - removed text */}
-              <button className="relative z-10 bg-[#D4AF37] hover:bg-[#BF9D30] text-black rounded-full p-4 flex items-center justify-center transition-all duration-300">
+              {/* Play button */}
+              <button className="relative z-10 bg-[#D4AF37] hover:bg-[#BF9D30] text-black rounded-full p-4 flex items-center justify-center transition-all duration-300 hover:scale-110">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M5 3L19 12L5 21V3Z" fill="currentColor"/>
                 </svg>
               </button>
             </div>
+            
+            {/* Video controls when playing */}
+            {isVideoPlaying && (
+              <div className="absolute bottom-0 left-0 right-0 p-4 flex items-center justify-center transition-opacity duration-300 opacity-0 hover:opacity-100">
+                <button 
+                  onClick={toggleVideo}
+                  className="bg-[#D4AF37] hover:bg-[#BF9D30] text-black rounded-full p-2 flex items-center justify-center transition-all duration-300"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 4H6V20H10V4Z M18 4H14V20H18V4Z" fill="currentColor"/>
+                  </svg>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
