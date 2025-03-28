@@ -5,7 +5,7 @@ export function CTASection() {
   const [isVisible, setIsVisible] = useState(false);
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [waitlistCount, setWaitlistCount] = useState(2547);
+  const [waitlistCount, setWaitlistCount] = useState(632);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const sectionRef = useRef(null);
   const containerRef = useRef(null);
@@ -24,14 +24,19 @@ export function CTASection() {
       observer.observe(sectionRef.current);
     }
     
-    // Simulate people joining the waitlist
+    // Simulate people joining the waitlist at a slower rate (every hour)
     const interval = setInterval(() => {
       setWaitlistCount(prev => {
-        // Random increase between 1-3 people
-        const increase = Math.floor(Math.random() * 3) + 1;
+        // Random increase between 1-10 people
+        const increase = Math.floor(Math.random() * 10) + 1;
         return prev + increase;
       });
-    }, 3000); // Update every 3 seconds
+    }, 3600000); // Update every hour (3600000 ms)
+    
+    // Fixed increase by 2 every hour
+    const fixedInterval = setInterval(() => {
+      setWaitlistCount(prev => prev + 2);
+    }, 3600000); // Every hour
     
     const handleMouseMove = (e) => {
       if (!containerRef.current) return;
@@ -48,6 +53,7 @@ export function CTASection() {
     return () => {
       observer.disconnect();
       clearInterval(interval);
+      clearInterval(fixedInterval);
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
@@ -95,17 +101,11 @@ export function CTASection() {
         className="max-w-4xl mx-auto px-6 md:px-8 relative z-10 text-center"
       >
         {/* Main headline */}
-        <h2 className={`text-5xl md:text-6xl font-bold mb-6 transition-all duration-700 ${
+        <h2 className={`text-5xl md:text-6xl font-bold mb-8 transition-all duration-700 ${
           isVisible ? 'opacity-100' : 'opacity-0 transform -translate-y-4'
         }`}>
-          Start Your <span className="text-[#D4AF37]">Success</span> Story
+          Creator collab on <span className="text-[#D4AF37]">steroids</span>
         </h2>
-        
-        <p className={`text-gray-300 text-xl mb-12 max-w-2xl mx-auto transition-all duration-700 delay-200 ${
-          isVisible ? 'opacity-100' : 'opacity-0 transform -translate-y-4'
-        }`}>
-          Join brands achieving <span className="text-[#D4AF37] font-medium">12% engagement rates</span>
-        </p>
         
         {/* Waitlist counter */}
         <div className={`mb-10 transition-all duration-1000 delay-300 ${
@@ -210,18 +210,6 @@ export function CTASection() {
               Join thousands of brands already revolutionizing their marketing.
             </p>
           </div>
-        </div>
-        
-        {/* Demo button option */}
-        <div className={`mt-12 transition-all duration-1000 delay-700 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-        }`}>
-          <button className="bg-transparent border border-[#D4AF37] text-[#D4AF37] hover:bg-[rgba(218,165,32,0.1)] transition-all duration-300 rounded-full px-8 py-3 font-medium">
-            Book a Demo
-          </button>
-          <p className="mt-3 text-sm text-gray-400">
-            Prefer a personalized demo? Our team is ready to help.
-          </p>
         </div>
       </div>
     </section>
