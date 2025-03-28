@@ -38,38 +38,6 @@ export function FeaturesSection() {
     };
   }, []);
 
-  const featureItems = [
-    {
-      title: "AI-Powered Creator Match",
-      subtitle: "Our AI reviews 100K+ creators to find your perfect matches.",
-      image: "creator-match-cards.png",
-      buttonText: "Book a Demo"
-    },
-    {
-      title: "Automated Campaign Management",
-      subtitle: "Let AI streamline your briefings, outreach, replies, and review content, allowing you to focus on strategy.",
-      image: "campaign-management.png",
-      buttonText: "Book a Demo"
-    },
-    {
-      title: "Real-Time Performance Analysis",
-      subtitle: "Monitor engagement, sentiment, and ROI as they happen in key areas.",
-      image: "performance-analysis.png",
-      buttonText: "Book a Demo"
-    },
-    {
-      title: "Revolutionary Performance",
-      subtitle: "Scale your creator marketing without scaling your team.",
-      image: "revolutionary-performance.png",
-      buttonText: "Book a Demo",
-      stats: [
-        {label: "Impressions", value: "300K"},
-        {label: "Likes", value: "25K"},
-        {label: "Conversion Rate", value: "35%"}
-      ]
-    }
-  ];
-
   return (
     <section 
       id="features" 
@@ -92,22 +60,18 @@ export function FeaturesSection() {
       <div className="max-w-7xl mx-auto px-6 md:px-10 relative z-10">
         {/* Features content */}
         <div className="space-y-32">
-          {/* Feature 1: AI-Powered Creator Match */}
+          {/* Feature 1: AI That Knows Your Brand */}
           <div className={`flex flex-col lg:flex-row gap-10 items-center transition-all duration-1000 delay-100 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
             <div className="lg:w-1/2 lg:pr-6">
-              <div className="text-sm text-[#D4AF37] mb-2 uppercase tracking-wider">Our Solutions</div>
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                <span className="text-[#D4AF37]">AI-Powered</span><br />
-                Creator Match
+                <span className="text-[#D4AF37]">AI That Knows</span><br />
+                Your Brand
               </h2>
               <p className="text-gray-300 mb-8 text-lg">
-                Our AI reviews 100K+ creators to find your perfect matches.
+                Understands your positioning, narrative, and audience like a true teammate.
               </p>
-              <button className="bg-[#D4AF37] hover:bg-[#BF9D30] text-black font-medium rounded-full px-8 py-3 transition-all duration-300">
-                Book a Demo
-              </button>
             </div>
             
             <div className="lg:w-1/2 relative">
@@ -149,22 +113,18 @@ export function FeaturesSection() {
             </div>
           </div>
           
-          {/* Feature 2: Automated Campaign Management */}
+          {/* Feature 2: AI outreaches to thousands */}
           <div className={`flex flex-col lg:flex-row gap-10 items-center transition-all duration-1000 delay-200 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
             <div className="lg:w-1/2 lg:pr-6">
-              <div className="text-sm text-[#D4AF37] mb-2 uppercase tracking-wider">Our Solutions</div>
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                <span className="text-[#D4AF37]">Automated</span><br />
-                Campaign Management
+                <span className="text-[#D4AF37]">AI outreaches</span> to thousands<br />
+                of relevant creators on your behalf
               </h2>
               <p className="text-gray-300 mb-8 text-lg">
-                Let AI streamline your briefings, outreach, replies, and review content, allowing you to focus on strategy.
+                No more manual research, list building, and outreach. Our AI agent handles this for you.
               </p>
-              <button className="bg-[#D4AF37] hover:bg-[#BF9D30] text-black font-medium rounded-full px-8 py-3 transition-all duration-300">
-                Book a Demo
-              </button>
             </div>
             
             <div className="lg:w-1/2 relative">
@@ -212,23 +172,18 @@ export function FeaturesSection() {
             </div>
           </div>
           
-          {/* Feature 3: Real-Time Performance Analysis */}
+          {/* Feature 3: Say bye to back and forth emails */}
           <div className={`flex flex-col lg:flex-row gap-10 items-center transition-all duration-1000 delay-300 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}>
             <div className="lg:w-1/2 lg:pr-6">
-              <div className="text-sm text-[#D4AF37] mb-2 uppercase tracking-wider">Our Solutions</div>
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                <span className="text-[#D4AF37]">Real-Time</span><br />
-                Performance Analysis for<br />
-                Instant Insights
+                <span className="text-[#D4AF37]">Say bye</span> to back<br />
+                and forth emails
               </h2>
               <p className="text-gray-300 mb-8 text-lg">
-                Monitor engagement, sentiment, and ROI as they happen in key areas.
+                Our AI agent negotiates with influencers on your behalf and collaborate with them from start to finish.
               </p>
-              <button className="bg-[#D4AF37] hover:bg-[#BF9D30] text-black font-medium rounded-full px-8 py-3 transition-all duration-300">
-                Book a Demo
-              </button>
             </div>
             
             <div className="lg:w-1/2 relative">
@@ -287,83 +242,6 @@ export function FeaturesSection() {
                       <div className="text-xs text-gray-400 mb-1">35-44</div>
                       <div className="text-[#D4AF37] font-medium">25%</div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Feature 4: Revolutionary Performance */}
-          <div className={`flex flex-col lg:flex-row gap-10 items-center transition-all duration-1000 delay-400 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}>
-            <div className="lg:w-1/2 lg:pr-6">
-              <div className="text-sm text-[#D4AF37] mb-2 uppercase tracking-wider">Our Solutions</div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                <span className="text-[#D4AF37]">Revolutionary</span><br />
-                Performance
-              </h2>
-              <p className="text-gray-300 mb-8 text-lg">
-                Scale your creator marketing without scaling your team.
-              </p>
-              <button className="bg-[#D4AF37] hover:bg-[#BF9D30] text-black font-medium rounded-full px-8 py-3 transition-all duration-300">
-                Book a Demo
-              </button>
-            </div>
-            
-            <div className="lg:w-1/2 relative">
-              {/* Revolutionary performance timeline visualization */}
-              <div className="relative"
-                style={{ 
-                  transform: `perspective(1000px) rotateY(${mousePosition.x * 2}deg) rotateX(${-mousePosition.y * 2}deg)` 
-                }}>
-                <div className="mb-8">
-                  <div className="flex items-center mb-3">
-                    <div className="rounded-full bg-gray-700 w-8 h-8 mr-3"></div>
-                    <div className="flex-1">
-                      <div className="w-48 h-3 bg-gray-700 rounded-full mb-1"></div>
-                      <div className="w-32 h-2 bg-gray-700 rounded-full"></div>
-                    </div>
-                  </div>
-                  
-                  <div className="relative ml-4 pl-6 border-l border-[rgba(218,165,32,0.3)]">
-                    <div className="absolute top-0 left-0 w-3 h-3 rounded-full bg-[#D4AF37] transform -translate-x-1.5"></div>
-                    <div className="mb-2">Use AI to find influencers to collaborate with my brand</div>
-                    
-                    <div className="flex -ml-2 mb-2">
-                      {Array.from({ length: 8 }).map((_, i) => (
-                        <div key={i} 
-                          className="w-6 h-6 rounded-full bg-gray-800 border border-gray-700 -ml-1"
-                          style={{ zIndex: 8 - i }}
-                        ></div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="relative ml-4 pl-6 border-l border-[rgba(218,165,32,0.3)] mb-8">
-                  <div className="absolute top-0 left-0 w-3 h-3 rounded-full bg-[#D4AF37] transform -translate-x-1.5"></div>
-                  <div className="mb-4">Your collaboration is up and running, keep track of your results in a handy dashboard</div>
-                  
-                  <div className="grid grid-cols-2 gap-2 mb-2">
-                    {Array.from({ length: 4 }).map((_, i) => (
-                      <div key={i} className="aspect-square rounded-lg bg-[rgba(30,30,35,0.8)] border border-[rgba(50,50,55,0.5)]"></div>
-                    ))}
-                  </div>
-                </div>
-                
-                <div className="flex justify-between">
-                  <div className="text-center">
-                    <div className="text-[#D4AF37] text-3xl font-bold">300K</div>
-                    <div className="text-xs text-gray-400">Impressions</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-[#D4AF37] text-3xl font-bold">25K</div>
-                    <div className="text-xs text-gray-400">Likes</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-[#D4AF37] text-3xl font-bold">35%</div>
-                    <div className="text-xs text-gray-400">Conversion Rate</div>
                   </div>
                 </div>
               </div>
