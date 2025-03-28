@@ -25,7 +25,7 @@ export function Footer() {
           <div className="mb-6 md:mb-0">
             <Link href="#home" className="inline-block group">
               <span className="text-xl font-bold tracking-tight">
-                <span className="text-white">Grow</span><span className="text-[#D4AF37]">Vibe</span>
+                <span className="text-white">Auto</span><span className="text-[#D4AF37]">Collab</span>
               </span>
             </Link>
             <p className="text-sm text-gray-400 mt-2">

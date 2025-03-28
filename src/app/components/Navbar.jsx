@@ -36,7 +36,7 @@ export function Navbar() {
           {/* Logo */}
           <Link href="#home" className="relative group flex items-center">
             <span className="text-xl sm:text-2xl font-bold tracking-tight">
-              <span className="text-white">Grow</span><span className="text-[#D4AF37]">Vibe</span>
+              <span className="text-white">Auto</span><span className="text-[#D4AF37]">Collab</span>
             </span>
             <div className="absolute -bottom-2 left-0 w-0 h-0.5 bg-gradient-to-r from-[#BF9D30] to-[#D4AF37] transition-all duration-300 group-hover:w-full"></div>
           </Link>
