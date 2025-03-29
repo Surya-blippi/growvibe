@@ -201,7 +201,7 @@ export function HeroSection() {
           
           <div className={`max-w-3xl mx-auto transition-all duration-1000 delay-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <div className="flex flex-col items-center justify-center mb-6">
-              {/* FIXED: Mobile-friendly input field and button layout */}
+              {/* Expanded and redesigned input field with premium button */}
               <form onSubmit={handleTryForFree} className="relative w-full max-w-2xl mb-2 group">
                 <div className="absolute left-6 top-1/2 transform -translate-y-1/2">
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -212,15 +212,14 @@ export function HeroSection() {
                   type="text" 
                   value={websiteUrl}
                   onChange={handleWebsiteUrlChange}
-                  placeholder="Enter website URL to find relevant creators" 
-                  className={`w-full py-4 px-14 md:pr-36 pr-24 rounded-full bg-[rgba(0,0,0,0.7)] border ${urlError ? 'border-red-500' : 'border-[rgba(218,165,32,0.3)]'} text-white focus:outline-none focus:border-[#D4AF37] transition-all duration-300 text-base`}
+                  placeholder="Enter website URL" 
+                  className={`w-full py-4 px-14 rounded-full bg-[rgba(0,0,0,0.7)] border ${urlError ? 'border-red-500' : 'border-[rgba(218,165,32,0.3)]'} text-white focus:outline-none focus:border-[#D4AF37] transition-all duration-300 text-base`}
                 />
                 <button 
                   type="submit"
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-[#D4AF37] to-[#BF9D30] text-black rounded-full md:px-8 px-4 py-2.5 text-sm font-medium transition-all duration-300 hover:shadow-lg hover:shadow-[rgba(218,165,32,0.3)] group-hover:scale-105"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-[#D4AF37] to-[#BF9D30] text-black rounded-full px-8 py-2.5 text-sm font-medium transition-all duration-300 hover:shadow-lg hover:shadow-[rgba(218,165,32,0.3)] group-hover:scale-105"
                 >
-                  <span className="md:inline hidden">Try for free</span>
-                  <span className="md:hidden inline">Try it</span>
+                  Try for free
                 </button>
               </form>
               
@@ -231,7 +230,7 @@ export function HeroSection() {
                 </div>
               )}
               
-              <div className="flex flex-col md:flex-row items-center justify-center md:gap-12 gap-3 mt-2">
+              <div className="flex items-center justify-center gap-12 mt-2">
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center border border-[rgba(218,165,32,0.5)]">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
