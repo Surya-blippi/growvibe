@@ -7,6 +7,26 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata = {
   title: 'AutoCollab - AI-Powered Distribution Engine',
   description: 'Autonomous influencer marketing to grow your revenue',
+  openGraph: {
+    title: 'AutoCollab - AI-Powered Distribution Engine',
+    description: 'Autonomous influencer marketing to grow your revenue',
+    type: 'website',
+    url: 'https://www.autocollab.co/',
+    siteName: 'AutoCollab',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'AutoCollab - AI-Powered Distribution Engine',
+    description: 'Autonomous influencer marketing to grow your revenue',
+  },
+  metadataBase: new URL('https://www.autocollab.co/'),
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: 'https://www.autocollab.co/',
+  }
 }
 
 export default function RootLayout({ children }) {
